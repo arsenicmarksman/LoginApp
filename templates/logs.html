@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Activity Logs</title>
+</head>
+<body>
+  <h1>Activity Logs</h1>
+  <ul>
+      {% for for entry in logs %}
+      <li>{{ entry }}</li>
+      {% endfor %}
+  </ul>
+  <nav>
+      <a href="/dashboard">Back to Dashboard</a>
+  </nav>
+</body>
+</html>

@@ -48,15 +48,15 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        logging.debug(f"Attempting login for username: {username}")
         conn = sqlite3.connect('users.db')
         cursor = conn.execute('SELECT * FROM users WHERE username=? AND password=?', (username, password))
         user = cursor.fetchone()
-        logging.debug(f"User found: {user}")
         conn.close()
         if user:
             session['username'] = username
-            return redirect('/users')
+            with open('activity.log', 'a') as log:
+                log.write(f"User {username} logged in.\n")
+            return redirect('/dashboard')
         else:
             return "Invalid username or password. Please try again."
     return render_template('login.html')
@@ -114,3 +114,20 @@ def profile():
     if user:
         return render_template('profile.html', user={'email': user[0], 'bio': user[1]})
     return redirect('/login')
+@app.route('/dashboard')
+def dashboard():
+    if 'username' not in session:
+        return redirect('/login')
+    conn = sqlite3.connect('users.db')
+    cursor = conn.execute('SELECT COUNT(*) FROM users')
+    user_count = cursor.fetchone()[0]
+    conn.close()
+    return render_template('dashboard.html', user_count=user_count)
+
+@app.route('/logs')
+def logs():
+    if 'username' not in session:
+        return redirect('/login')
+    with open('activity.log', 'r') as log:
+        entries = log.readlines()
+        return render_template('logs.html', logs=entries)

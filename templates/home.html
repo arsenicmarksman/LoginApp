@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #007bff;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <style>
+        @media (max-width: 768px) {
+            nav a {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/users">View Users</a>
+    </nav>
+    <h1>Welcome to the Login App!</h1>
+    <p>Use the navigation bar to explore.</p>
+<div id="loader" style="display: none;">
+    <p>Loading...</p>
+</div>
+<script>
+    document.onreadystatechange = function() {
+        if (document.readyState === "loading") {
+            document.getElementById('loader').style.display = "block";
+        } else {
+            document.getElementById('loader').style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

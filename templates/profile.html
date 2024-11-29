@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Profile</h2>
+    <form method="POST" action="/profile">
+        <label for="email">Email:</label>
+        <input type="email" name="email" value="{{ user['email'] }}" required>
+        <label for="bio">Bio:</label>
+        <textarea name="bio" rows="4">{{ user['bio'] }}</textarea>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

@@ -35,12 +35,6 @@ def register():
             conn.close()
         return redirect('/login')
     return render_template('register.html')
-# Route: Home page
-@app.route('/')
-def home():
-    if 'user' in session:
-        return redirect(url_for('welcome'))
-    return redirect(url_for('login'))
 
 # Route: Login page
 @app.route('/login', methods=['GET', 'POST'])

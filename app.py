@@ -82,7 +82,7 @@ if __name__ == '__main__':
 @app.route('/users', methods=['GET'])
 @app.route('/users')
 def users():
-    logging.debug(f"Session data: {session}")
+    logging.debug(f"Session: {session}")
     if 'username' not in session:
         return redirect('/login')
     conn = sqlite3.connect('users.db')
@@ -91,9 +91,15 @@ def users():
     conn.close()
     return render_template('users.html', users=users)
 
-@app.route('/home')
+@app.route('/home', methods=['GET'])
 def home():
-    return render_template('home.html')
+    if 'username' not in session:
+        return redirect('/login')
+    conn = sqlite3.connect('users.db')
+    cursor = conn.execute('SELECT COUNT(*) FROM users')
+    user_count = cursor.fetchone()[0]
+    conn.close()
+    return render_template('dashboard.html', user_count=user_count)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():

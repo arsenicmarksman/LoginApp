@@ -85,15 +85,13 @@ def users():
     conn.close()
     return render_template('users.html', users=users)
 
-@app.route('/home', methods=['GET'])
+@app.route('/home')
 def home():
+    app.logger.debug(f"Home accessed. Session: {session}")
     if 'username' not in session:
+        app.logger.debug("Redirecting to /login due to missing username in session.")
         return redirect('/login')
-    conn = sqlite3.connect('users.db')
-    cursor = conn.execute('SELECT COUNT(*) FROM users')
-    user_count = cursor.fetchone()[0]
-    conn.close()
-    return render_template('dashboard.html', user_count=user_count)
+    return render_template('home.html')
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -116,7 +114,9 @@ def profile():
     return redirect('/login')
 @app.route('/dashboard')
 def dashboard():
+    app.logger.debug(f"Dashboard accessed. Session: {session}")
     if 'username' not in session:
+        app.logger.debug("Redirecting to /login due to missing username in session.")
         return redirect('/login')
     conn = sqlite3.connect('users.db')
     cursor = conn.execute('SELECT COUNT(*) FROM users')
